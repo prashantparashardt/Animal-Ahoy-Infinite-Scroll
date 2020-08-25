@@ -39,6 +39,7 @@ let imageUrls = new Set();
 
 //Function to Fetch initial 15 posts
 async function getInitialImages() {
+  loading.classList.add("show");
   while (imageUrls.size < 15) {
     imageUrls.add(await getRandomImage());
   }
@@ -65,6 +66,7 @@ async function showImages(imgs) {
       `;
     imageContainer.appendChild(imagEl);
   });
+  if (loading.classList.contains("show")) loading.classList.remove("show");
 }
 
 //Function Call to get Initial 15 Images
@@ -82,6 +84,7 @@ async function getNextTenImages(n) {
 //Showing Loader & Fetch more posts
 function showLoading() {
   loading.classList.add("show");
+  loading.style.bottom = "0px";
   setTimeout(() => {
     loading.classList.remove("show");
     setTimeout(() => {
