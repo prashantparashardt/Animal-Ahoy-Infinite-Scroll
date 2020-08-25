@@ -46,17 +46,6 @@ async function getInitialImages() {
   showImages([...imageUrls]);
 }
 
-//Function to show images on UI
-// async function showImages() {
-//   [...imageUrls].slice(Math.max([...imageUrls].length - 15, 0)).map((imag) => {
-//     const imagEl = document.createElement("div");
-//     imagEl.classList.add("card");
-//     imagEl.innerHTML = `
-//       <img src=${imag} />
-//       `;
-//     imageContainer.appendChild(imagEl);
-//   });
-// }
 async function showImages(imgs) {
   imgs.map((imag) => {
     const imagEl = document.createElement("div");
@@ -73,7 +62,7 @@ async function showImages(imgs) {
 getInitialImages();
 
 //Function to Fetch next 5 posts & Showing on UI
-async function getNextTenImages(n) {
+async function getNextImages(n) {
   console.log(n);
   while (imageUrls.size < n + 5) {
     imageUrls.add(await getRandomImage());
@@ -82,16 +71,16 @@ async function getNextTenImages(n) {
 }
 
 //Showing Loader & Fetch more posts
-function showLoading() {
-  loading.classList.add("show");
-  loading.style.bottom = "0px";
-  setTimeout(() => {
-    loading.classList.remove("show");
-    setTimeout(() => {
-      getNextTenImages(imageUrls.size);
-    }, 300);
-  }, 2000);
-}
+// function showLoading() {
+//   loading.classList.add("show");
+//   loading.style.bottom = "0px";
+//   setTimeout(() => {
+//     loading.classList.remove("show");
+//     setTimeout(() => {
+//       getNextImages(imageUrls.size);
+//     }, 300);
+//   }, 2000);
+// }
 
 //Infinite Scroll
 window.addEventListener("scroll", () => {
@@ -99,7 +88,9 @@ window.addEventListener("scroll", () => {
     window.scrollY + window.innerHeight >=
     document.documentElement.scrollHeight
   ) {
-    showLoading();
+    loading.classList.add("show");
+    loading.style.bottom = "0px";
+    getNextImages(imageUrls.size);
   }
 });
 
